@@ -1,0 +1,89 @@
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header" style="text-align: center">
+                    <h4>Todo</h4>
+                    <button class=" btn btn-primary" (click)="flag($event)"> + Add Task</button>
+                </div>
+            </div>
+            <div class="col-md-12" *ngIf="isshow">
+                <form [formGroup]="task">
+                    <input type="text" placeholder="Enter Task"
+                        style="font-size: 1.3rem; margin-top: 10px;background-color:rgb(253, 252, 252);"
+                        matTooltip="Create new" class="form-control px-2" formControlName="todo" required>
+                    <button class="btn btn-primary my-2" (click)="addTodoList();inprogressisshow=false"
+                        [disabled]="!task.valid">
+                        + Add
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12">
+            <div class="card">
+                <div class="card-header" style="text-align: center;">
+                    <h4>In Progress</h4>
+                    <button class=" btn btn-primary" (click)="inprogressisshow=true"> + Add Task</button>
+                </div>
+            </div>
+            <div class=" col-md-12" *ngIf="inprogressisshow">
+                <form [formGroup]="task">
+                    <input type="text" placeholder="Enter Task" style="font-size: 1.3rem; margin-top: 8px"
+                        class="form-control px-2" formControlName="todo">
+                    <button class="btn btn-primary my-2" (click)="addinprogressTodoList();inprogressisshow=false"
+                        [disabled]="!task.valid">
+                        +Add</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="card">
+                <div class="card-header" style="text-align: center;">
+                    <h4>Completed</h4>
+                    <br>
+                </div>
+            </div>
+        </div>
+        &nbsp;&nbsp;
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div *ngFor="let item of list; let i = index">
+                        <div class="card my-2 py-2" *ngIf="item.status == 'todo'">
+                            <div class="d-flex align-item-center justify-content-around">
+                                <input class="form-check-input" type="checkbox" (change)="list[i].status='progress'">
+                                <p class="form-check-label ms-4" style="font-size: 1.3rem;">{{item.todo}}</p>
+                                <button class="btn btn-outline-danger" (click)="deletetodo(i)"><i
+                                        class="fa fa-window-close" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div *ngFor="let item of list; let i = index">
+                        <div class="card my-2 py-2" *ngIf="item.status == 'progress'">
+                            <div class="d-flex align-item-center justify-content-around">
+                                <input class="form-check-input" type="checkbox" (change)="list[i].status='complete'">
+                                <p class="form-check-label ms-4" style="font-size: 1.3rem;">{{item.todo}}</p>
+                                <button class="btn btn-outline-danger" (click)="deletetodo(i)"><i
+                                        class="fa fa-window-close" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div *ngFor="let item of list; let i = index">
+                        <div class="card my-2 py-2" *ngIf="item.status == 'complete'">
+                            <div class="d-flex align-item-center justify-content-around">
+                                <p class="form-check-label ms-4" style="font-size: 1.3rem;">{{item.todo}}</p>
+                                <button class="btn btn-outline-danger" style="margin-right: -20%;"
+                                    (click)="deletetodo(i)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
